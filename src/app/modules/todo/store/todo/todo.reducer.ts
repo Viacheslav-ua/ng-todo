@@ -23,7 +23,7 @@ export const todoReducer = (state: TodoState = initialState, action: TodoActions
           ...state.todoList,
           {
             id: state.idIncrement,
-            name: action.payload,
+            name: action.payload.name,
             completed: false,
           }
         ]

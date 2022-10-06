@@ -7,13 +7,20 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { TodoModule } from './modules/todo/todo.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot([
+      {
+        path: '**',
+        redirectTo: '',
+      },
+    ]),
     StoreModule.forRoot({}, {
       runtimeChecks: {
         strictStateImmutability: true,
