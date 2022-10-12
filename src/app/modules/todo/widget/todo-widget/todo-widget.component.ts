@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Todo } from '../../model/todu';
+import { TodoAsyncStoragesService } from '../../service/todo-async-storages.service';
 import { TodoCreateAction, TodoDeleteAction, TodoEditAction, TodoToggleAction } from '../../store/todo/todo.actions';
 import { TodoState } from '../../store/todo/todo.reducer';
 import { todoListSelector } from '../../store/todo/todo.selectors';
@@ -16,13 +17,17 @@ export class TodoWidgetComponent implements OnInit {
   todoList = []
   todoList$: Observable<Todo[]> = this.store$.pipe(select(todoListSelector))
 
-  constructor(private store$: Store<TodoState>) { }
+  constructor(
+    private store$: Store<TodoState>,
+    private todoSyncStorage: TodoAsyncStoragesService
+  ) { }
 
   ngOnInit(): void {
+    this.todoSyncStorage.init()
   }
 
   onCreate(name: string) {
-    console.log(name)
+
     this.store$.dispatch(
       new TodoCreateAction({
         name,

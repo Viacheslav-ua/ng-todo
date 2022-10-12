@@ -1,6 +1,6 @@
 import { provideCloudinaryLoader } from "@angular/common"
 import { Todo } from "../../model/todu"
-import { TodoActions, todoActionsType } from "./todo.actions"
+import { TodoActions, todoActionsType, TodoDeleteAction } from "./todo.actions"
 
 export const TODO_REDUCER_NODE = 'todo'
 
@@ -58,6 +58,10 @@ export const todoReducer = (state: TodoState = initialState, action: TodoActions
           : todo)
       }
 
+    case todoActionsType.load:
+      return {
+        ...action.payload.state
+      }
     default:
       return state
   }
