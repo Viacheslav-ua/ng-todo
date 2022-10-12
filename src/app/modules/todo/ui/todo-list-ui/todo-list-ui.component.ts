@@ -8,6 +8,8 @@ import { Todo } from '../../model/todu';
 })
 export class TodoListUiComponent implements OnInit {
 
+  editIds: number[] = []
+
   @Input()
   todoList: Todo[] | null = []
 
@@ -16,6 +18,9 @@ export class TodoListUiComponent implements OnInit {
 
   @Output()
   toggle = new EventEmitter<number>()
+
+  @Output()
+  edit = new EventEmitter<{id: number, name: string}>()
 
   constructor() { }
 
@@ -26,9 +31,17 @@ export class TodoListUiComponent implements OnInit {
     this.delete.emit(id)
   }
 
-  onToggle(event: MouseEvent, id: number) {
-    event.preventDefault()
+  onToggle(id: number) {
     this.toggle.emit(id)
+  }
+
+  onEdit(name: string, id: number) {
+    this.editIds = this.editIds.filter(editId => editId !== id)
+    this.edit.emit({id, name})
+  }
+
+  onEditMode(id: number) {
+    this.editIds.push(id)
   }
 
 }

@@ -1,3 +1,4 @@
+import { provideCloudinaryLoader } from "@angular/common"
 import { Todo } from "../../model/todu"
 import { TodoActions, todoActionsType } from "./todo.actions"
 
@@ -33,6 +34,17 @@ export const todoReducer = (state: TodoState = initialState, action: TodoActions
       return {
         ...state,
         todoList: state.todoList.filter(todo => todo.id !== action.payload.id)
+      }
+
+    case todoActionsType.edit:
+      return {
+        ...state,
+        todoList: state.todoList.map(todo => todo.id === action.payload.id
+         ? {
+              ...todo,
+              name: action.payload.name,
+            }
+          : todo)
       }
 
     case todoActionsType.toggle:
